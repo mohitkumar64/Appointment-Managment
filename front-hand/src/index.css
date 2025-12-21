@@ -6,5 +6,9 @@
 body{
     box-sizing: border-box;
     background: RGB(228, 232, 240);
-    background: linear-gradient(180deg, rgba(228, 232, 240, 1) 0%, rgba(176, 187, 214, 1) 99%);
+    background: linear-gradient(180deg, rgba(228, 232, 240, 1) 0%, rgba(176, 187, 214, 1) 79%);
+}
+
+.Tcolor{
+    background-color: rgb(233, 237, 242);
 }

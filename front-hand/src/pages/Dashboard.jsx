@@ -4,32 +4,108 @@ import file from './json/filewrite.json'
 import calender from './json/Calendar.json'
 import question from './json/Question mark.json'
 import { useNavigate } from "react-router-dom";
+import {useAuth} from '../context/AuthProvider'
+import dayjs from "dayjs";
+import { useRef } from "react";
+
+ function Info({ label, value }) {
+ const  countRef = useRef(0);
+ const timeoutRef = useRef(null);
+ const nav = useNavigate();
+
+  
+
+ const handleDoubleClick = ()=>{
+   countRef.current +=1 ;
+  if(countRef.current === 1){
+    timeoutRef.current = setTimeout(()=>{
+      countRef.current = 0
+    },2000);
+
+
+  }
+
+  if(countRef.current === 2){
+    clearTimeout(timeoutRef);
+    countRef.current = 0;
+    nav('/editProfile')
+  }
+ }
+
+  return (
+    <div onClick={handleDoubleClick} className="flex flex-col wrap-anywhere bg-gray-100 rounded-lg p-4  hover:scale-90 duration-75">
+      <span className="text-sm text-gray-500">{label}</span>
+      <span className="text-lg font-medium text-gray-800">
+        {value ?? "Not added yet"}
+      </span>
+    </div>
+  );
+}
 
 function Dashboard() {
   const navigate = useNavigate();
+  const {user , setUser} = useAuth();
+ 
+  
   return (
     <div>
       <Navbar />
-      <div className=" h-[90vh] gap-x-5  gap-y-5 m-5 p-5 flex flex-wrap ">
+      <div className="  gap-x-5  gap-y-5 m-5 p-5 flex flex-wrap ">
         <div className="flex-1 border rounded-xl" >
-            <div className="h-60  flex rounded-t-xl flex-col bg-linear-to-b from-blue-600 to-blue-700 justify-center items-center ">
+            <div className=" flex rounded-t-xl flex-col bg-linear-to-b from-blue-600 to-blue-700 justify-center items-center ">
               <div className="rounded-full object-cover overflow-hidden w-50 h-50 border-2 border-blue-900">
                   <img  className=" h-50 w-55  bg-clip-content" src="https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg" alt="" />
               </div>
                 
-                <h1 className="text-2xl font-semibold ">Tushar Sharma</h1>
+                <h1 className="text-2xl font-semibold ">{user.name || ""}</h1>
             </div>
-            <div className="mt-5 border  mx-5 rounded-md flex grow flex-col bg-[#F3E5AB] justify-center  gap-y-5   items-center">
-                <p className="border-b   w-full text-center">Father Name : Govind </p>
-                <p className="border-b   w-full text-center">Mother Name : Sheetal </p>
-                <p className="border-b   w-full text-center">D.O.B : 2/5/2006 </p>
-                <p className="border-b   w-full text-center">College  : NIT surat</p>
-                <p className="border-b   w-full text-center">Course : Btech </p>
-                <p className="border-b   w-full text-center">Brach : cse </p>
-                <p className="border-b   w-full text-center">Year/sem :3 </p>
-                <p className="border-b   w-full text-center"> College Roll No: 24024010114 </p>
+           <div className="  bg-white rounded-b-xl shadow-md p-6 space-y-6">
 
-            </div>  
+           
+            <div>
+              <h2 className="text-xl font-semibold mb-4 text-gray-700">
+                Basic Information
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800">
+                <Info label="Father Name" value={user.FatherName} />
+                <Info label="Mother Name" value={user.MotherName} />
+                <Info label="Date of Birth" value={dayjs(user.DateOfBirth).format('YYYY-MM-DD')} />
+                <Info label="Email" value={user.email} />
+                <Info label="College" value="NIT Surat" />
+              </div>
+            </div>
+
+           
+            {user.role === "student" && (
+              <div>
+                <h2 className="text-xl font-semibold mb-4 text-blue-700">
+                  Student Details
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Info label="Course" value={user.studentInfo?.Course} />
+                  <Info label="Branch" value={user.studentInfo?.Branch} />
+                  <Info label="Year / Semester" value={user.studentInfo?.Year} />
+                  <Info label="Roll Number" value={user.studentInfo?.RollNumber} />
+                </div>
+              </div>
+            )}
+
+           
+            {user.role === "teacher" && (
+              <div>
+                <h2 className="text-xl font-semibold mb-4 text-green-700">
+                  Teacher Details
+                </h2>
+
+                <Info
+                  label="Subjects"
+                  value={user.teacherInfo?.Subjects}
+                />
+              </div>
+            )}
+          </div> 
 
         </div>
 

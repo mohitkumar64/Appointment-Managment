@@ -1,12 +1,33 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 import "../index.css"
 
 
 function Navbar() {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+
+ async function handlelogout(){
+  try {
+      await axios.post('http://localhost:5000/auth/logout' , {} , {
+        withCredentials:true
+      })
+
+  } catch (error) {
+    console.log(error)
+  }finally{
+      console.log("navbar")
+      navigate('/login');
+      
+  }
+      
+
+      
+  }
 
   return (
     <div className="sticky top-0 z-50">
@@ -33,7 +54,7 @@ function Navbar() {
         
         <div className="flex gap-10 text-2xl">
           <NavLink to="/admin/dashboard">Admin Panel</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
+           <button onClick={handlelogout}>Logout</button>
         </div>
 
       </nav>
@@ -52,7 +73,7 @@ function Navbar() {
             <div className="flex flex-col gap-y-3  py-4 px-2 text-xl">
                 <NavLink className={"p-2 pl-5 rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/"> Dashboard</NavLink>
                 <NavLink className={"p-2  rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/editProfile"> Edit Profile</NavLink>
-                <NavLink className={"p-2  rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/appointment"> Appointments</NavLink>
+                <NavLink className={"p-2  rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/appointments"> Appointments</NavLink>
             </div>
           </motion.div>
         )}
