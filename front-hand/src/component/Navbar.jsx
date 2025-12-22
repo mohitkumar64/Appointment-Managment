@@ -67,7 +67,7 @@ function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -150 }}
             transition={{ duration: 0.3 }}
-            className="fixed  left-0 h-screen w-[250px] bg-linear-to-b from-blue-600 to-blue-600 border-r border-[#4E71FF] z-10 shadow-xl"
+            className=" fixed top-15  left-0 h-screen w-[250px] bg-linear-to-b from-blue-600 to-blue-600 border-r border-[#4E71FF] z-10 shadow-xl"
           >
            
             <div className="flex flex-col gap-y-3  py-4 px-2 text-xl">

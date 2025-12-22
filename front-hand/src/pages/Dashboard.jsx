@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import {useAuth} from '../context/AuthProvider'
 import dayjs from "dayjs";
 import { useRef } from "react";
+import FormateDate from './function/FormatDate'
 
  function Info({ label, value }) {
  const  countRef = useRef(0);
@@ -21,7 +22,7 @@ import { useRef } from "react";
     timeoutRef.current = setTimeout(()=>{
       countRef.current = 0
     },2000);
-
+ 
 
   }
 
@@ -33,7 +34,11 @@ import { useRef } from "react";
  }
 
   return (
-    <div onClick={handleDoubleClick} className="flex flex-col wrap-anywhere bg-gray-100 rounded-lg p-4  hover:scale-90 duration-75">
+   <div
+  onClick={handleDoubleClick}
+  className="flex flex-col justify-between wrap-anywhere bg-gray-100 rounded-lg p-4 min-h-[96px] w-full hover:scale-95 transition"
+>
+
       <span className="text-sm text-gray-500">{label}</span>
       <span className="text-lg font-medium text-gray-800">
         {value ?? "Not added yet"}
@@ -44,14 +49,16 @@ import { useRef } from "react";
 
 function Dashboard() {
   const navigate = useNavigate();
-  const {user , setUser} = useAuth();
- 
+  const {user , appointments} = useAuth();
+ const filterAppointments = appointments?.filter((a)=>{
+  a.Status === 'approved'
+ })
   
   return (
-    <div>
+    <div className="min-h-[100vh] ">
       <Navbar />
       <div className="  gap-x-5  gap-y-5 m-5 p-5 flex flex-wrap ">
-        <div className="flex-1 border rounded-xl" >
+        <div className="flex-1 min-w-[400px] bg-white border rounded-xl" >
             <div className=" flex rounded-t-xl flex-col bg-linear-to-b from-blue-600 to-blue-700 justify-center items-center ">
               <div className="rounded-full object-cover overflow-hidden w-50 h-50 border-2 border-blue-900">
                   <img  className=" h-50 w-55  bg-clip-content" src="https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg" alt="" />
@@ -59,13 +66,13 @@ function Dashboard() {
                 
                 <h1 className="text-2xl font-semibold ">{user.name || ""}</h1>
             </div>
-           <div className="  bg-white rounded-b-xl shadow-md p-6 space-y-6">
+           <div className="  bg-white rounded-b-xl  p-6 space-y-6">
 
            
             <div>
               <h2 className="text-xl font-semibold mb-4 text-gray-700">
                 Basic Information
-              </h2>
+              </h2>  
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-800">
                 <Info label="Father Name" value={user.FatherName} />
@@ -83,7 +90,8 @@ function Dashboard() {
                   Student Details
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+
                   <Info label="Course" value={user.studentInfo?.Course} />
                   <Info label="Branch" value={user.studentInfo?.Branch} />
                   <Info label="Year / Semester" value={user.studentInfo?.Year} />
@@ -99,10 +107,10 @@ function Dashboard() {
                   Teacher Details
                 </h2>
 
-                <Info
-                  label="Subjects"
-                  value={user.teacherInfo?.Subjects}
-                />
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
+                  <Info label="Subjects" value={user.TeacherInfo?.Subjects?.join(", ")} />
+                  <Info label="Experience" value={user.TeacherInfo?.Experience ?? "—"} />
+              </div>
               </div>
             )}
           </div> 
@@ -114,7 +122,7 @@ function Dashboard() {
             <div className=" border rounded-xl border-white p-5 flex flex-wrap justify-center  md:justify-start gap-x-10 gap-y-10">
 
 
-                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl border-blue-900 hover:scale-90 transition-transform duration-75 items-center shadow-md shadow-blue-900"
+                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl border-blue-900 hover:scale-95 P-5 transition-transform duration-75 items-center shadow-md shadow-blue-900"
                   onClick={()=>{
                   navigate('/editProfile')}}
                 >
@@ -122,13 +130,13 @@ function Dashboard() {
                       <LottieAnimation  animation={file} />
                       <p className="text-2xl font-semibold text-white ">Edit Profile</p>
                 </div>
-                <div className="  h-50 w-50 bg-transparent backdrop-blur-lg flex flex-col justify-center border rounded-xl border-blue-900 hover:scale-90 transition-transform duration-75 items-center shadow-md shadow-blue-900" onClick={()=>{
+                <div className="  h-50 P-5 overflow-hidden w-50 bg-transparent backdrop-blur-lg flex flex-col justify-center border rounded-xl border-blue-900 hover:scale-95 transition-transform duration-75 items-center shadow-md shadow-blue-900" onClick={()=>{
                   navigate('/appointments')
                 }}   >
                       <LottieAnimation  animation={calender} />
                       <p className="text-2xl font-semibold text-white ">Appointments</p>
                 </div>
-                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl  border-blue-900 hover:scale-90 transition-transform duration-75 items-center shadow-md shadow-blue-900">
+                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl  border-blue-900 hover:scale-95 transition-transform duration-75 items-center shadow-md shadow-blue-900">
                     <div className="h-40  scale-60">
                         <LottieAnimation  animation={question} />
                     </div>
@@ -137,12 +145,41 @@ function Dashboard() {
                 </div>
 
             </div>
-            <p className="text-4xl font-bold text-white mb-5">Appointments</p>
+         <p className="text-4xl font-bold text-white mb-5">Appointments</p>
 
-            <div className="overflow-y-scroll md:flex-grow scrollbar-hide"> 
-                  <div className=" h-50 w-70  flex flex-col justify-center border rounded-xl border-blue-900 hover:scale-90 transition-transform duration-75 items-center shadow-md shadow-blue-900">     
-                </div>
+            <div className="flex flex-col h-[350px]">
+              <div className="flex-1 overflow-y-auto scrollbar-hide space-y-3">
+                
+                {
+                  filterAppointments.length >0 ? (
+
+                    
+                      filterAppointments.map((v)=>(
+
+                      <div 
+                      key={v._id}
+                      className="w-full rounded-xl border border-blue-900 bg-white p-4 shadow-md transition hover:shadow-lg">
+                            <p className="text-sm text-gray-500">{`${v.Subject} • ${v.mode}`}</p>
+                            <p className="text-base font-semibold text-gray-800">
+                             {` ${FormateDate(v.date) }, ${v.TimeSlot}`}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              With Mohit Kumar
+                            </p>
+                    </div>
+
+                      )
+
+                      )
+                    
+                    
+                  ) : <p className="text-slate-400 text-2xl"> no aprroved appointments</p>
+                }
+               
+
+              </div>
             </div>
+
             <div></div>
 
         </div>

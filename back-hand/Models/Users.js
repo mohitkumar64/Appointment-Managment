@@ -21,7 +21,8 @@ const UserSchema = new mongoose.Schema({
         Year : String ,    
     },
    TeacherInfo : {
-     Subjects : [String]
+     Subjects : [String] ,
+     TimeSlot : String
 
    }
    

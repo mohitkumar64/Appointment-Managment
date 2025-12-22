@@ -8,6 +8,7 @@ require('dotenv').config();
 const cors  = require('cors');
 const auth = require('./middleware/auth')
 const userRouter = require('./Router/UserRoute')
+const AppointmentRoute = require('./Router/AppointmentRoute')
 
 app.use(cors({
   origin : "http://localhost:5173" ,
@@ -27,7 +28,9 @@ app.use(cookieParser());
 app.use('/api/v1/', auth , router);
 app.use('/api/user/',userRouter);
 app.use('/auth/' , authRouter);
-app.use(require('./Router/meRoute'))
+app.use(require('./Router/meRoute'));
+app.use('/api/v1/', auth , AppointmentRoute);
+
 
 
 const start = async()=>{

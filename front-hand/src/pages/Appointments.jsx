@@ -1,8 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
+import {useAuth} from "../context/AuthProvider"
+import axios from "axios";
+import AppointmentCard from "./AppointmentCard";
+
 
 function Appointments() {
+
   const [activeTab, setActiveTab] = useState("pending");
+  const [Teacher , setTeacher] = useState([]);
+  const {user , appointments} = useAuth();
+  const [value , setValue] = useState({
+    "studentId" : user._id ,
+    "TeacherId" : "",
+    "subject" : "",
+    "reason" : "",
+    "date" : "",
+    "mode" : ""         
+
+  })
+
+  const filterappointment = appointments?.filter((a)=> a.Status === activeTab);
+  console.log("Appointments in UI:", appointments);
+ 
+  function handleChange(e){
+    const {name , value} = e.target;
+    setValue(prev=>({
+      ...prev ,
+      [name] : value   
+    }))
+  }
+async  function handlePost(){
+  try {
+    console.log(value)
+    const res = await axios.post("http://localhost:5000/api/v1/Appointments" , value , {withCredentials  :true});
+    if(res.data.status){
+       alert('sucessful')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+     
+  }
+
+  useEffect(()=>{
+    const getTeacher =async()=>{
+      const res = await axios.get('http://localhost:5000/api/v1/Teacher', {withCredentials  :true})
+      setTeacher(res.data)
+    }
+    getTeacher();
+  },[])
+
 
   const inputClass =
     "w-full rounded-lg border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500";
@@ -20,20 +68,30 @@ function Appointments() {
               Teacher Available for Appointment
             </p>
 
-            <div className="grid grid-cols-3 gap-4 text-center">
-              {[
-                { label: "Name", value: "Mohit" },
-                { label: "Subjects", value: "Math, English" },
-                { label: "Time Slots", value: "9–7" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="bg-slate-50 rounded-xl p-4"
-                >
-                  <p className="text-sm text-slate-500">{item.label}</p>
-                  <p className="font-semibold">{item.value}</p>
+            <div className="grid grid-cols-1 bg-slate-200 rounded-xl text-center">
+              
+                <div className="  grid grid-cols-4 gap-3  border-b border-zinc-700 text-center text-md md:text-xl font-semibold  p-4">
+                  <p className=" text-zinc-700">S.No</p> 
+                  <p className=" text-zinc-700">Name</p> 
+                  <p className=" text-zinc-700">Subjects</p> 
+                  <p className=" text-zinc-700">Time-slot</p> 
                 </div>
-              ))}
+
+                {
+                  Teacher.map((data , i)=>(
+                <div key={i} className="  grid grid-cols-4 gap-4 text-center  p-4">
+                  <p className="text-sm text-slate-500">{i+1}</p>
+                  <p className="text-sm text-slate-500">{data.name}</p> 
+                  <p className="text-sm text-slate-500">{(data.subjects.join(' , '))
+                  }</p> 
+                  <p className="text-sm text-slate-500">{data.TimeSlot}</p> 
+                </div>
+                  ))
+                    
+                  
+                }
+                
+             
             </div>
           </div>
 
@@ -44,39 +102,63 @@ function Appointments() {
             </p>
 
             <div className="flex flex-col gap-3">
-              <label>Student Name</label>
-              <input className={inputClass} />
-
-              <label>Student ID</label>
-              <input className={inputClass} />
-
-              <label>Section</label>
-              <input className={inputClass} />
-
+             
               <label>Teacher</label>
-              <select className={inputClass}>
-                <option>Mohit</option>
+             <select
+                  className={inputClass}
+                  name="TeacherId"
+                  onChange={(e) =>
+                    setValue((prev) => ({
+                      ...prev,
+                      TeacherId: e.target.value,
+                    }))
+                  }
+                >
+                  <option value="">Select Teacher</option>
+
+                  {Teacher.map((t) => (
+                    <option key={t._id} value={t._id}>
+                      {t.name}
+                    </option>
+                  ))}
               </select>
 
               <label>Subject</label>
-              <input className={inputClass} />
+              <input className={inputClass}
+                 onChange={handleChange} 
+                name="subject"
+              />
 
               <label>Reason</label>
-              <textarea rows={3} className={inputClass} />
+              <textarea rows={3} className={inputClass}
+                 onChange={handleChange} 
+                name="reason"
+              />
 
               <label>Date</label>
-              <input type="date" className={inputClass} />
+              <input type="date" className={inputClass}
+                 onChange={handleChange}
+                name="date"
+              />
 
               <label>Time Slot</label>
-              <input type="time" className={inputClass} />
+              <input type="time" className={inputClass}
+                 onChange={handleChange}
+                  name="TimeSlot"
+              />
 
               <label>Mode</label>
-              <select className={inputClass}>
-                <option>In Person</option>
-                <option>Online</option>
+              <select className={inputClass}
+                 onChange={handleChange}
+                name="mode"
+              >
+                <option value={'In person'} >In Person</option>
+                <option value={'Online'}>Online</option>
               </select>
 
-              <button className="mt-4 rounded-lg bg-blue-600 py-2 font-semibold text-white hover:bg-blue-700 transition">
+              <button className="mt-4 rounded-lg bg-blue-600 py-2 font-semibold text-white hover:bg-blue-700 transition"
+                onClick={handlePost}
+              >
                 Create Appointment
               </button>
             </div>
@@ -100,16 +182,23 @@ function Appointments() {
               </button>
             ))}
           </div>
+              <div>
+                  {
+                    filterappointment.length > 0 ?                    
+                        (<div  className="grid  gap-5  grid-cols-2 md:grid-cols-3 ">
+                        {
+                          filterappointment.map((v , i)=>{
+                          return ( 
+                              <AppointmentCard  appointment={v} key={v._id} user={user}/> 
+                          )
+                        })
+                      
+                        }
+                      </div>) :  <p className="text-slate-600">No {activeTab} appointments</p>
 
-          {activeTab === "pending" && (
-            <p className="text-slate-600">No pending appointments</p>
-          )}
-          {activeTab === "approved" && (
-            <p className="text-slate-600">No approved appointments</p>
-          )}
-          {activeTab === "rejected" && (
-            <p className="text-slate-600">No rejected appointments</p>
-          )}
+                  }
+              </div>
+         
         </div>
       </div>
     </div>

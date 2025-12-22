@@ -6,7 +6,9 @@ import loadingfx from './pages/json/SandyLoading.json'
 
 export default function ProtectedRoute() {
   
+ 
   const {user , loading} = useAuth();
+  
  
   if (loading) return (
     <div className="h-screen w-full bg-white flex justify-center items-center">
