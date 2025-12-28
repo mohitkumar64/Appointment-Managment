@@ -14,6 +14,7 @@ import FormateDate from './function/FormatDate'
  const timeoutRef = useRef(null);
  const nav = useNavigate();
 
+ 
   
 
  const handleDoubleClick = ()=>{
@@ -50,9 +51,13 @@ import FormateDate from './function/FormatDate'
 function Dashboard() {
   const navigate = useNavigate();
   const {user , appointments} = useAuth();
- const filterAppointments = appointments?.filter((a)=>{
-  a.Status === 'approved'
- })
+  
+ console.log(user);
+ 
+  
+ const filterappointment = appointments?.filter((a)=> a.Status === "approved");
+
+ 
   
   return (
     <div className="min-h-[100vh] ">
@@ -101,7 +106,7 @@ function Dashboard() {
             )}
 
            
-            {user.role === "teacher" && (
+            {user.role === "Teacher" && (
               <div>
                 <h2 className="text-xl font-semibold mb-4 text-green-700">
                   Teacher Details
@@ -136,7 +141,11 @@ function Dashboard() {
                       <LottieAnimation  animation={calender} />
                       <p className="text-2xl font-semibold text-white ">Appointments</p>
                 </div>
-                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl  border-blue-900 hover:scale-95 transition-transform duration-75 items-center shadow-md shadow-blue-900">
+                <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl  border-blue-900 hover:scale-95 transition-transform duration-75 items-center shadow-md shadow-blue-900"
+                   onClick={()=>{
+                  navigate('/query')
+                }} 
+                >
                     <div className="h-40  scale-60">
                         <LottieAnimation  animation={question} />
                     </div>
@@ -151,17 +160,20 @@ function Dashboard() {
               <div className="flex-1 overflow-y-auto scrollbar-hide space-y-3">
                 
                 {
-                  filterAppointments.length >0 ? (
+                  filterappointment.length > 0 ? (
 
                     
-                      filterAppointments.map((v)=>(
+                      filterappointment.map((v)=>(
 
                       <div 
                       key={v._id}
+                      onClick={()=>{
+                        window.location.href = '/appointments'
+                      }}
                       className="w-full rounded-xl border border-blue-900 bg-white p-4 shadow-md transition hover:shadow-lg">
-                            <p className="text-sm text-gray-500">{`${v.Subject} • ${v.mode}`}</p>
+                            <p className="text-sm text-gray-500">{`${v.subject} • ${v.Mode}`}</p>
                             <p className="text-base font-semibold text-gray-800">
-                             {` ${FormateDate(v.date) }, ${v.TimeSlot}`}
+                             {` ${FormateDate(v.date) }, ${v.TimeSlot || ""}`}
                             </p>
                             <p className="text-sm text-gray-600">
                               With Mohit Kumar
@@ -173,7 +185,7 @@ function Dashboard() {
                       )
                     
                     
-                  ) : <p className="text-slate-400 text-2xl"> no aprroved appointments</p>
+                  ) : <p className="text-slate-400 text-2xl"> no approved appointments</p>
                 }
                
 

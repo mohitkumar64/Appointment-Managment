@@ -14,6 +14,7 @@ function Login() {
         withCredentials: true
       });
 
+      
       window.location.href = "/";
     } catch (err) {
       console.error("Login failed", err);

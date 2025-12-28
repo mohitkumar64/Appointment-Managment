@@ -23,7 +23,8 @@ async function getAppointments(req,res) {
       
       
       else if(role === 'Admin'){
-               appointment = await Appointment.find();              
+               appointment = await Appointment.find().populate("TeacherId", "name subjects")
+          .populate("studentId" , 'name email');;              
       }else{
           res.status(400).json('you are not authorised')
       }
@@ -32,12 +33,15 @@ async function getAppointments(req,res) {
 }
 
 async function PostAppointments(req,res) {
-     console.log("post console" , req.body);
+
+     const data = req.body
+     const body =  { ...data ,expireAt: new Date(Date.parse(data.date) + 2 * 24 * 60 * 60 * 1000)};
+     console.log(body);
      
       try {
-          const appointment = await Appointment.create(req.body);
+          const appointment = await Appointment.create(body);
        res.status(200).json({
-            status : true
+            status : true , appointment
        })   
       } catch (error) {
            console.log("from postAppointment"+error);

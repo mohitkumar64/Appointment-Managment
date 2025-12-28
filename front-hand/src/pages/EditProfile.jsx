@@ -6,6 +6,8 @@ import dayjs from 'dayjs'
 
 function EditProfile() {
   const {user , setUser} = useAuth();
+    
+    const {role} = user;
  const [value, setValue] = useState(() => ({
   name: user?.name ?? "",
   FatherName: user?.FatherName ?? "",
@@ -18,6 +20,8 @@ function EditProfile() {
 }));
 
   function handleChange(e){
+
+  
     const {name , value}  = e.target;
     setValue(prev =>({
       ...prev ,
@@ -70,7 +74,11 @@ function EditProfile() {
                         onChange={(e)=>{handleChange(e);}}
                       className="px-3 outline-none border-b-2 border-gray-400 hover:border-black  focus:border-black" type="date" name="DateOfBirth" />
                   </div>
-                  <div  className=" flex flex-col       ">
+
+
+
+                 { role === "student" && <>
+                     <div  className=" flex flex-col       ">
                         <label htmlFor="rollno">Roll number</label>
                       <input 
                         value={value.RollNumber}
@@ -98,9 +106,16 @@ function EditProfile() {
                         onChange={(e)=>{handleChange(e)}}
                       className="px-3 outline-none border-b-2 border-gray-400 hover:border-black  focus:border-black" type="text" name="Year" />
                   </div>
+                  
+                  
+                 </>}
+                 
                       
                       <div className="flex justify-end items-end">
-                          <button className="bg-green-700 px-5 text-2xl font-semibold text-white rounded-xl py-2"
+                          <button className="bg-green-600 px-5 text-2xl font-semibold text-white rounded-xl py-2
+                            hover:cursor-pointer hover:bg-green-700
+                          
+                          "
                             onClick={
                               handleUpdate
                             }

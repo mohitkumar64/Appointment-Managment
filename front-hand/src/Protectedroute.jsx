@@ -9,6 +9,8 @@ export default function ProtectedRoute() {
  
   const {user , loading} = useAuth();
   
+  
+  
  
   if (loading) return (
     <div className="h-screen w-full bg-white flex justify-center items-center">
@@ -17,8 +19,10 @@ export default function ProtectedRoute() {
    
   );
   if (!user){
-    return <Navigate to='/login' />;
+    return <Navigate to='/login'  replace />;
   };
+   
+
 
   return <Outlet />;
 }

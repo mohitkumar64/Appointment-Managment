@@ -61,7 +61,7 @@ function updateAppointmentStatus(id, newStatus) {
 
   
   return (
-    <AuthContext.Provider value={{ user, setUser, loading , appointments , updateAppointmentStatus }}>
+    <AuthContext.Provider value={{ user, setUser, loading , appointments , setAppointments , updateAppointmentStatus }}>
       {!loading && children}
     </AuthContext.Provider>
   );

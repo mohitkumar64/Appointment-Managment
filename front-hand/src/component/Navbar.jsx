@@ -3,12 +3,17 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
+import {useAuth} from '../context/AuthProvider'
 
 import "../index.css"
 
 
 function Navbar() {
   const [isVisible, setIsVisible] = useState(false);
+  const {user} = useAuth();
+  const {role} = user;
+  
+  
   const navigate = useNavigate();
 
  async function handlelogout(){
@@ -51,11 +56,36 @@ function Navbar() {
           </motion.div>
         </button>
 
-        
-        <div className="flex gap-10 text-2xl">
-          <NavLink to="/admin/dashboard">Admin Panel</NavLink>
-           <button onClick={handlelogout}>Logout</button>
-        </div>
+                        
+              <div className="flex items-center gap-6 text-sm">
+                { role === "Admin" ?  
+                <NavLink
+                      to="/adminpanel"
+                      className="px-4 py-2 rounded-md font-medium
+                                text-white hover:bg-blue-600 transition flex gap-2 items-center"
+                    >
+                     <img src="/admin-panel.png" alt="" className="w-6 h-6" /> Admin Panel
+                  </NavLink> :
+                  <NavLink
+                      className="px-4 py-2 rounded-md font-bold
+                                text-white  hover:bg-white hover:text-blue-600 text-lg transition flex gap-2 items-center"
+                    >
+                     <span className="w-4 h-4 bg-red-500 rounded-full"></span> {role}
+                  </NavLink> 
+                  
+                  }
+
+                  <button
+                      onClick={handlelogout}
+                      className="px-4 py-2 rounded-md font-medium
+                                text-white border border-white/40
+                                hover:bg-white hover:text-blue-700
+                                transition flex items-center gap-2"
+                    >
+                      Logout  <img src="/user-logout.png" alt="" className="w-5 h-5" />
+                  </button>
+              </div>
+
 
       </nav>
 

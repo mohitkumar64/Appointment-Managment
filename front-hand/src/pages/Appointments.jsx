@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "../component/Navbar";
 import {useAuth} from "../context/AuthProvider"
 import axios from "axios";
@@ -8,20 +8,23 @@ import AppointmentCard from "./AppointmentCard";
 function Appointments() {
 
   const [activeTab, setActiveTab] = useState("pending");
+  const [popupMessage, setPopupMessage] = useState("");
+
   const [Teacher , setTeacher] = useState([]);
-  const {user , appointments} = useAuth();
+  const {user , appointments , setAppointments} = useAuth();
   const [value , setValue] = useState({
     "studentId" : user._id ,
     "TeacherId" : "",
     "subject" : "",
     "reason" : "",
     "date" : "",
-    "mode" : ""         
+    "mode" : "" ,
+    "TimeSlot" : ""      
 
   })
 
   const filterappointment = appointments?.filter((a)=> a.Status === activeTab);
-  console.log("Appointments in UI:", appointments);
+  // console.log("Appointments in UI:", appointments);
  
   function handleChange(e){
     const {name , value} = e.target;
@@ -32,13 +35,26 @@ function Appointments() {
   }
 async  function handlePost(){
   try {
-    console.log(value)
+    
     const res = await axios.post("http://localhost:5000/api/v1/Appointments" , value , {withCredentials  :true});
     if(res.data.status){
-       alert('sucessful')
+        
+        setAppointments(prev => [...prev, res.data.appointment]);
+        setPopupMessage("Appointment created successfully");
+        setValue({
+           "studentId" : user._id ,
+          "TeacherId" : "",
+          "subject" : "",
+          "reason" : "",
+          "date" : "",
+          "mode" : "" ,
+          "TimeSlot" : ""
+        })
+      
     }
   } catch (error) {
     console.log(error)
+    setPopupMessage("something went wrong");
   }
      
   }
@@ -57,7 +73,9 @@ async  function handlePost(){
 
   return (
     <div className="min-h-screen bg-[#E9EDF5]">
+
       <Navbar />
+      {popupMessage && <Popup message={popupMessage}  setPopupMessage={setPopupMessage}/>}
 
       <div className="p-6 flex flex-col gap-6">
      
@@ -124,31 +142,31 @@ async  function handlePost(){
               </select>
 
               <label>Subject</label>
-              <input className={inputClass}
+              <input  value={value.subject} className={inputClass}
                  onChange={handleChange} 
                 name="subject"
               />
 
               <label>Reason</label>
-              <textarea rows={3} className={inputClass}
+              <textarea rows={3}  value={value.reason} className={inputClass}
                  onChange={handleChange} 
                 name="reason"
               />
 
               <label>Date</label>
-              <input type="date" className={inputClass}
+              <input type="date"  value={value.date} className={inputClass}
                  onChange={handleChange}
                 name="date"
               />
 
               <label>Time Slot</label>
-              <input type="time" className={inputClass}
+              <input type="time"  value={value.TimeSlot} className={inputClass}
                  onChange={handleChange}
                   name="TimeSlot"
               />
 
               <label>Mode</label>
-              <select className={inputClass}
+              <select  value={value.mode} className={inputClass}
                  onChange={handleChange}
                 name="mode"
               >
@@ -204,5 +222,29 @@ async  function handlePost(){
     </div>
   );
 }
+
+function Popup({ message , setPopupMessage }) {
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShow(false);
+      setPopupMessage('')
+
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div className="w-72 p-4 border border-green-800 bg-white text-green-600 font-medium fixed top-5 right-5 rounded-md shadow z-50">
+      {message}
+    </div>
+  );
+}
+
+
 
 export default Appointments;

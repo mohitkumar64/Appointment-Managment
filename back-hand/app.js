@@ -8,7 +8,9 @@ require('dotenv').config();
 const cors  = require('cors');
 const auth = require('./middleware/auth')
 const userRouter = require('./Router/UserRoute')
+const adminRouter = require('./Router/AdminRoute')
 const AppointmentRoute = require('./Router/AppointmentRoute')
+const admin = require('./middleware/admin')
 
 app.use(cors({
   origin : "http://localhost:5173" ,
@@ -30,6 +32,7 @@ app.use('/api/user/',userRouter);
 app.use('/auth/' , authRouter);
 app.use(require('./Router/meRoute'));
 app.use('/api/v1/', auth , AppointmentRoute);
+app.use('/api/v1/', auth , admin , adminRouter);
 
 
 

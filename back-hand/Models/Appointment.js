@@ -26,9 +26,16 @@ const AppointmentSchema = mongoose.Schema({
         type : String ,
         enum : ["pending" , "approved" , "rejected"],
         default : "pending"
-      }
+      } , 
+    expireAt: {
+    type: Date,
+   
+    index: { expireAfterSeconds: 0 }
+  }
 
 } ,{ timestamps: true }
+, 
 )
+
 
 module.exports = mongoose.model('Appointment' , AppointmentSchema);
