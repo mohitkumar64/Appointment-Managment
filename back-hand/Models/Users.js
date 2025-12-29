@@ -13,6 +13,14 @@ const UserSchema = new mongoose.Schema({
     FatherName : String ,
     MotherName : String ,
     DateOfBirth : Date ,
+    ProfileImage : {
+        type : String
+        
+    },
+    College : {
+        type : String ,
+        default : "....",
+    },
 
     studentInfo : {
         RollNumber: Number ,

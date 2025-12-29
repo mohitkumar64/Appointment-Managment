@@ -3,6 +3,7 @@ import Navbar from "../component/Navbar";
 import {useAuth} from "../context/AuthProvider"
 import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
+import Popup from "./function/Popup";
 
 
 function Appointments() {
@@ -223,27 +224,7 @@ async  function handlePost(){
   );
 }
 
-function Popup({ message , setPopupMessage }) {
-  const [show, setShow] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(false);
-      setPopupMessage('')
-
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!show) return null;
-
-  return (
-    <div className="w-72 p-4 border border-green-800 bg-white text-green-600 font-medium fixed top-5 right-5 rounded-md shadow z-50">
-      {message}
-    </div>
-  );
-}
 
 
 

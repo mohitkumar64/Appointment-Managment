@@ -70,7 +70,7 @@ function Navbar() {
                       className="px-4 py-2 rounded-md font-bold
                                 text-white  hover:bg-white hover:text-blue-600 text-lg transition flex gap-2 items-center"
                     >
-                     <span className="w-4 h-4 bg-red-500 rounded-full"></span> {role}
+                     <span className="w-4 h-4 animate-pulse bg-red-500 rounded-full"></span> {role}
                   </NavLink> 
                   
                   }

@@ -1,10 +1,12 @@
 const User = require('../Models/Users');
 const QueryModel = require('../Models/Query')
 const dayjs = require('dayjs')
+const cloudinary = require("../config/cloudinary");
 
 async function UpdateUser(req , res) {
+   
     
-    const{name,FatherName,MotherName,DateOfBirth,Course,Year,RollNumber,Branch} = req.body;
+    const{name,FatherName,MotherName,DateOfBirth,Course,Year,RollNumber,Branch , ProfileImage} = req.body;
     const info = {
         "name" : name ,
         "FatherName" : FatherName, 
@@ -15,7 +17,9 @@ async function UpdateUser(req , res) {
         "Year" : Year ,
         "RollNumber" : RollNumber,
         "Branch" : Branch,
-        }
+       
+        },
+         "ProfileImage" : ProfileImage
         
      
 
@@ -26,7 +30,7 @@ async function UpdateUser(req , res) {
         runValidators : true
     }); 
 
-    console.log(user)
+    
    if(!user){
     res.status(404);
    } 
@@ -76,7 +80,40 @@ async function postQuery(req , res) {
 
     
 }
+const uploadImage = async(req, res) =>{
+   
+   
+    
+     try {
+            if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+            }
+
+            const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                { folder: "profiles" },
+                (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+                }
+            ).end(req.file.buffer);
+            });
+
+           
+            res.json({
+            message: true,
+            image: result.secure_url,
+                
+            });
+
+        } catch (err) {
+            console.log(err);
+            
+            res.status(500).json({ message: false });
+  }
+
+}
 
 
 
-module.exports = {UpdateUser , getQuery , postQuery}
+module.exports = {UpdateUser , getQuery , postQuery , uploadImage}

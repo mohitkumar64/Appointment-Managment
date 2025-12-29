@@ -52,7 +52,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const {user , appointments} = useAuth();
   
- console.log(user);
+ 
  
   
  const filterappointment = appointments?.filter((a)=> a.Status === "approved");
@@ -66,7 +66,7 @@ function Dashboard() {
         <div className="flex-1 min-w-[400px] bg-white border rounded-xl" >
             <div className=" flex rounded-t-xl flex-col bg-linear-to-b from-blue-600 to-blue-700 justify-center items-center ">
               <div className="rounded-full object-cover overflow-hidden w-50 h-50 border-2 border-blue-900">
-                  <img  className=" h-50 w-55  bg-clip-content" src="https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg" alt="" />
+                  <img  className=" h-50 w-55  bg-clip-content" src={ user.ProfileImage || "https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"} alt="" />
               </div>
                 
                 <h1 className="text-2xl font-semibold ">{user.name || ""}</h1>
@@ -84,7 +84,7 @@ function Dashboard() {
                 <Info label="Mother Name" value={user.MotherName} />
                 <Info label="Date of Birth" value={dayjs(user.DateOfBirth).format('YYYY-MM-DD')} />
                 <Info label="Email" value={user.email} />
-                <Info label="College" value="NIT Surat" />
+                <Info label="College" value={user.College } />
               </div>
             </div>
 

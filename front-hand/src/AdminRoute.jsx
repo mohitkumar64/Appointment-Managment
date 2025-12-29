@@ -28,7 +28,7 @@ useEffect(()=>{
   const getQuery = async()=>{
       const res = await axios.get('http://localhost:5000/api/v1/admin/getquery' , {withCredentials : true});
       setSubmittedQueries(res.data);
-      console.log(res.data);}
+      }
       
       
 
