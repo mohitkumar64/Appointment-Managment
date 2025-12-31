@@ -10,10 +10,20 @@ const [active , setActive] = useState('Users')
   const hover = useRef(null)
  const {allUsers} = useOutletContext(); 
 
-
+    const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("");
   const [search, setSearch] = useState("");
+
+
+  
+function handleEdit(userId , role){
+   
+    if(userId && role){
+     navigate(  `/adminPanel/editProfile/${userId}/${role}`)
+    }
+
+}
 
   const filteredUsers = activeTab === ""  ?  allUsers.filter(u =>
     u.name.toLowerCase().includes(search.toLowerCase())
@@ -141,15 +151,5 @@ const [active , setActive] = useState('Users')
   );
 }
 
-function handleEdit(userId , role){
-    console.log('h');
-    
-
-    
-    if(userId && role){
-      window.location.href =   `/adminPanel/editProfile/${userId}/${role}`;
-    }
-
-}
 
 export default Users;
