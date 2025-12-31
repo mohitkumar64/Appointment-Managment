@@ -12,6 +12,7 @@ import Users from './AdminPanel/Users'
 import AdminEditProfile from './AdminPanel/AdminEditProfile'
 import PostQuery from './pages/Query'
 import AdminQuery from './AdminPanel/AdminQuery'
+import {NotFound} from './pages/NotFound'
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
        
 
         <Route  path='/login' element={<LoginPage />} />
-
+        <Route path='*' element={<NotFound />} />
 
      </Routes>
     </>
