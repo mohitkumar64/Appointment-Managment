@@ -11,9 +11,13 @@ const userRouter = require('./Router/UserRoute')
 const adminRouter = require('./Router/AdminRoute')
 const AppointmentRoute = require('./Router/AppointmentRoute')
 const admin = require('./middleware/admin')
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL
+];
 
 app.use(cors({
-  origin : "http://localhost:5173" ,
+  origin : allowedOrigins, 
   credentials : true
   
 }
@@ -42,7 +46,7 @@ const start = async()=>{
    console.log('DB is connected');
 
    app.listen(5000 , ()=>{
-    console.log("server is running on http://localhost:5000");
+    console.log("server is running on http://localhost:5000 " + process.env.FRONTEND_URL);
    })
 
   } catch(err){
