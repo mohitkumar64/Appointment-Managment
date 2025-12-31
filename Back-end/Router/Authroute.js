@@ -63,10 +63,11 @@ Router.get("/google/callback" , async(req , res)=>{
                 expiresIn : '7d'
              });
 
-             res.cookie('token' , token , {
-                httpOnly : true ,               
-                sameSite : "strict"
-             })
+             res.cookie("token", token, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "none"
+                        });
              console.log('res send');
              
              res.status(200).json({               
