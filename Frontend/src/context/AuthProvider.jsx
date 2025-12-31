@@ -17,14 +17,19 @@ export function AuthProvider({ children }) {
    useEffect(() => {
     const restoreUser = async () => {
       try {
+        console.log('me route');
+        
         const res = await axios.get(
           `${API_URL}/me`,  
           { withCredentials: true }
         );
         
-        
+        console.log(res.data);
         setUser(res.data);
+       
       } catch {
+        console.log("error in auth");
+        
         setUser(null);
       } finally {
         setLoading(false); 
@@ -45,7 +50,8 @@ export function AuthProvider({ children }) {
           `${API_URL}/api/v1/Appointments`,
           { withCredentials: true }
         );
-       
+      
+        
         setAppointments(res.data);
 
       } catch {
