@@ -128,7 +128,7 @@ function EditProfile() {
               { label: "Mother Name", name: "MotherName" },
             ].map(({ label, name }) => (
               <div key={name} className="flex flex-col">
-                <label>{label}</label>
+                <label className="heading font-medium text-xl">{label}</label>
                 <input
                   name={name}
                   value={value[name]}
@@ -139,7 +139,7 @@ function EditProfile() {
             ))}
 
             <div className="flex flex-col">
-              <label>D.O.B</label>
+              <label className="heading font-medium text-xl">D.O.B</label>
               <input
                 type="date"
                 name="DateOfBirth"
@@ -153,7 +153,7 @@ function EditProfile() {
               <>
                 {["RollNumber", "Course", "Branch", "Year"].map((field) => (
                   <div key={field} className="flex flex-col">
-                    <label>{field}</label>
+                    <label className="heading font-medium text-xl">{field}</label>
                     <input
                       name={field}
                       value={value[field]}
@@ -180,7 +180,7 @@ function EditProfile() {
       <div className="p-5 flex">
         <div className="bg-red-500 w-2 h-10 mr-2" />
         <p className="text-lg bg-green-400 px-4 border-green-500 border-2">
-          <span className="font-bold">Note:</span> Any changes must be approved by admin.
+          <span className="font-bold ">Note:</span> Any other changes can only be changed by a Admin .
         </p>
       </div>
     </div>

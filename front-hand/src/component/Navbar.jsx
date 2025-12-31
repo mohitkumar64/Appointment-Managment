@@ -101,9 +101,18 @@ function Navbar() {
           >
            
             <div className="flex flex-col gap-y-3  py-4 px-2 text-xl">
-                <NavLink className={"p-2 pl-5 rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/"> Dashboard</NavLink>
-                <NavLink className={"p-2  rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/editProfile"> Edit Profile</NavLink>
-                <NavLink className={"p-2  rounded-md  shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/appointments"> Appointments</NavLink>
+                <NavLink className={"p-2 pl-5 rounded-md inline-flex shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 gap-3 items-center hover:shadow-xl "} to="/"> 
+                <div className="object-fit w-15 h-10"><img  className="w-10 h-10" src="icons8-dashboard-100.png" alt="" /></div> Dashboard</NavLink>
+                <NavLink className={"p-2  rounded-md  flex gap-3 shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/editProfile">  
+                <div className="w-15 h-10 object-fit">
+                     <img  className="w-10 h-10" src="icons8-edit-100.png" alt="" /> 
+                </div>
+               
+                Edit Profile</NavLink>
+                <NavLink className={"p-2  rounded-md flex  gap-3 shadow-md shadow-blue-950 text-white transition-all hover:-translate-y-2 hover:shadow-xl "} to="/appointments"> 
+                <div className="object-fit w-15 h-10 ">
+                    <img  className="w-10 h-10" src="icons8-appointment-100.png" alt="" />
+                  </div>  Appointments</NavLink>
             </div>
           </motion.div>
         )}

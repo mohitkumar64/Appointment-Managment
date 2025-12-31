@@ -30,7 +30,8 @@ const UserSchema = new mongoose.Schema({
     },
    TeacherInfo : {
      Subjects : [String] ,
-     TimeSlot : String
+     TimeSlot : String ,
+    
 
    }
    

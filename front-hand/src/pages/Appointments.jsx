@@ -83,7 +83,7 @@ async  function handlePost(){
         <div className="flex flex-wrap gap-6">
        
           <div className="flex-1 min-w-[300px] bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-            <p className="text-xl font-semibold text-center mb-6">
+            <p className="text-2xl font-semibold text-center mb-6 heading">
               Teacher Available for Appointment
             </p>
 
@@ -116,7 +116,7 @@ async  function handlePost(){
 
       
           <div className="flex-1 min-w-[300px] bg-white rounded-2xl border border-slate-200 shadow-lg p-6 max-h-[70vh] overflow-y-auto">
-            <p className="text-2xl font-bold text-center mb-4">
+            <p className=" text-2xl md:text-3xl font-bold text-center mb-4 heading">
               Create Appointment
             </p>
 

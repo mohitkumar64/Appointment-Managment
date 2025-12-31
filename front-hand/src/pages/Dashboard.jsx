@@ -69,7 +69,7 @@ function Dashboard() {
                   <img  className=" h-50 w-55  bg-clip-content" src={ user.ProfileImage || "https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"} alt="" />
               </div>
                 
-                <h1 className="text-2xl font-semibold ">{user.name || ""}</h1>
+                <h1 className="text-2xl font-semibold ">{ user.name.charAt(0).toUpperCase() + user.name.slice(1)|| ""}</h1>
             </div>
            <div className="  bg-white rounded-b-xl  p-6 space-y-6">
 
@@ -114,7 +114,7 @@ function Dashboard() {
 
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-fr">
                   <Info label="Subjects" value={user.TeacherInfo?.Subjects?.join(", ")} />
-                  <Info label="Experience" value={user.TeacherInfo?.Experience ?? "—"} />
+                  
               </div>
               </div>
             )}
@@ -123,7 +123,7 @@ function Dashboard() {
         </div>
 
         <div className="flex-2 rounded-xl bg-blue-600 p-5 flex flex-col gap-y-5 border ">
-            <p className="text-4xl font-bold text-white mb-5">Modules</p>
+            <p className="text-4xl font-bold text-white mb-5 heading">Modules</p>
             <div className=" border rounded-xl border-white p-5 flex flex-wrap justify-center  md:justify-start gap-x-10 gap-y-10">
 
 
@@ -139,7 +139,7 @@ function Dashboard() {
                   navigate('/appointments')
                 }}   >
                       <LottieAnimation  animation={calender} />
-                      <p className="text-2xl font-semibold text-white ">Appointments</p>
+                      <p className="text-2xl font-semibold text-white  ">Appointments</p>
                 </div>
                 <div className=" h-50 w-50  flex flex-col justify-center border rounded-xl  border-blue-900 hover:scale-95 transition-transform duration-75 items-center shadow-md shadow-blue-900"
                    onClick={()=>{
@@ -154,7 +154,7 @@ function Dashboard() {
                 </div>
 
             </div>
-         <p className="text-4xl font-bold text-white mb-5">Appointments</p>
+         <p className="text-4xl font-bold text-white mb-5 heading">Appointments</p>
 
             <div className="flex flex-col h-[350px]">
               <div className="flex-1 overflow-y-auto scrollbar-hide space-y-3">
