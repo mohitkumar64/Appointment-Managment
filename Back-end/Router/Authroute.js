@@ -67,8 +67,11 @@ Router.get("/google/callback" , async(req , res)=>{
                 httpOnly : true ,               
                 sameSite : "strict"
              })
-
+             console.log('res send');
+             
              res.status(200).json({
+                
+                
                 status : "sucess"
 
              }) 

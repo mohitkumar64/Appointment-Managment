@@ -8,10 +8,7 @@ function auth(req,res,next){
     if(!token) return res.sendStatus(401);
 
     try {
-        
-
         req.user = jwt.verify(token , process.env.Secret);
-        
         next();
 
 

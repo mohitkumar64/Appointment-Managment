@@ -19,7 +19,7 @@ export default function ProtectedRoute() {
     </div>
    
   );
-  if (!user.role){
+  if (!user){
     return <Navigate to='/login'  replace />;
   };
    
