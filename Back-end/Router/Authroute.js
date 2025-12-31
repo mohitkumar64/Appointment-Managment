@@ -85,7 +85,8 @@ Router.post('/logout',auth , (req,res)=>{
     console.log("logout  route hit")
     res.clearCookie("token", {
             httpOnly: true,
-            sameSite: "strict",
+             secure: true,
+            sameSite: "none",
             path: "/"
 })
 
