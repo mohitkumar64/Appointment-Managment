@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../component/Navbar";
 import axios from "axios";
 import dayjs from 'dayjs'
+import { API_URL } from "../config";
 
 function PostQuery() {
   const [query, setQuery] = useState("");
@@ -15,7 +16,7 @@ function PostQuery() {
   useEffect(() => {
     async function getQueries() {
       try {
-        const res = await axios.get("http://localhost:5000/api/user/query",{ withCredentials: true }
+        const res = await axios.get(`${API_URL}/api/user/query`,{ withCredentials: true }
         );
         console.log(res.data);
         
@@ -34,7 +35,7 @@ function PostQuery() {
 
     try {
       
-      const res = await axios.post("http://localhost:5000/api/user/query",{ query },{ withCredentials: true });
+      const res = await axios.post(`${API_URL}/api/user/query`,{ query },{ withCredentials: true });
 
       setSubmittedQueries((prev) => [res.data, ...prev]);
       setQuery("");

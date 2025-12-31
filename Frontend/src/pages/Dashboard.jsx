@@ -69,7 +69,7 @@ function Dashboard() {
                   <img  className=" h-50 w-55  bg-clip-content" src={ user.ProfileImage || "https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"} alt="" />
               </div>
                 
-                <h1 className="text-2xl font-semibold ">{ user.name.charAt(0).toUpperCase() + user.name.slice(1)|| ""}</h1>
+                <h1 className="text-2xl font-semibold ">{ user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)|| ""}</h1>
             </div>
            <div className="  bg-white rounded-b-xl  p-6 space-y-6">
 

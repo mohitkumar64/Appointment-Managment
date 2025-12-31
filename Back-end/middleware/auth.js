@@ -9,8 +9,9 @@ function auth(req,res,next){
 
     try {
         
-        
+
         req.user = jwt.verify(token , process.env.Secret);
+        
         next();
 
 

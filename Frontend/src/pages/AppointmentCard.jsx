@@ -2,6 +2,7 @@
 import axios from "axios";
 import FormatDate from "./function/FormatDate";
 import { useAuth } from "../context/AuthProvider";
+import { API_URL } from "../config";
 
 function AppointmentCard({ appointment, user }) {
   const {updateAppointmentStatus} = useAuth();
@@ -19,7 +20,7 @@ function AppointmentCard({ appointment, user }) {
   async function handleUpadte(status) {
   try {
     const res = await axios.put(
-      "http://localhost:5000/api/v1/Appointments",
+      `${API_URL}/api/v1/Appointments`,
       { _id, Status: status },
       { withCredentials: true }
     );

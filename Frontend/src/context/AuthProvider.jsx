@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../config";
 
 
 const AuthContext = createContext({
@@ -11,13 +12,17 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [appointments, setAppointments] = useState([]);
 
+   
+    
    useEffect(() => {
     const restoreUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/me",
+          `${API_URL}/me`,  
           { withCredentials: true }
         );
+        
+        
         setUser(res.data);
       } catch {
         setUser(null);
@@ -37,7 +42,7 @@ export function AuthProvider({ children }) {
     const fetchAppointments = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/api/v1/Appointments",
+          `${API_URL}/api/v1/Appointments`,
           { withCredentials: true }
         );
        

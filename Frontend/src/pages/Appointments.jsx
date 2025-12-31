@@ -4,6 +4,8 @@ import {useAuth} from "../context/AuthProvider"
 import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
 import Popup from "./function/Popup";
+import { API_URL } from "../config";
+
 
 
 function Appointments() {
@@ -37,7 +39,7 @@ function Appointments() {
 async  function handlePost(){
   try {
     
-    const res = await axios.post("http://localhost:5000/api/v1/Appointments" , value , {withCredentials  :true});
+    const res = await axios.post(`${API_URL}/api/v1/Appointments` , value , {withCredentials  :true});
     if(res.data.status){
         
         setAppointments(prev => [...prev, res.data.appointment]);
@@ -62,7 +64,7 @@ async  function handlePost(){
 
   useEffect(()=>{
     const getTeacher =async()=>{
-      const res = await axios.get('http://localhost:5000/api/v1/Teacher', {withCredentials  :true})
+      const res = await axios.get(`${API_URL}/api/v1/Teacher`, {withCredentials  :true})
       setTeacher(res.data)
     }
     getTeacher();

@@ -4,7 +4,7 @@ import Sidebar from "./AdminSidebar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import dayjs from 'dayjs'
-
+import { API_URL } from "../config";
 function AdminEditProfile() {
   const { userId, role } = useParams();
     const [active , setActive] = useState('Users')
@@ -28,7 +28,7 @@ function AdminEditProfile() {
 
   useEffect(()=>{
     async function getuserData() {
-        const res = await axios.post("http://localhost:5000/api/v1/admin/getuserdata" ,{_id : userId} , {withCredentials : true});
+        const res = await axios.post(`${API_URL}/api/v1/admin/getuserdata` ,{_id : userId} , {withCredentials : true});
         setValue(res.data);
     }
 
@@ -48,7 +48,7 @@ function AdminEditProfile() {
   async function handleUpdate() {
     try {
         await axios.put(
-      `http://localhost:5000/api/v1/admin/getallusers`,
+      `${API_URL}/api/v1/admin/getallusers`,
       { _id : userId ,   value},
       { withCredentials: true }
     );

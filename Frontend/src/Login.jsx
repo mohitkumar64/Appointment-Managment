@@ -1,12 +1,13 @@
 import { GoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useState } from "react";
+import {API_URL} from "./config"
 
 function Login() {
  const [error , setError] = useState(false);
   const handleSuccess = async (cred) => {
     try {
-      await axios.get("http://localhost:5000/auth/google/callback", {
+      await axios.get(`${API_URL}/auth/google/callback`, {
         params: {
           credential: cred.credential,
           role: "student" 

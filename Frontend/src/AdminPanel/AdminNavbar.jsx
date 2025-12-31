@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 function Navbar() {;
   const navigate = useNavigate();
 async function handlelogout(){
     
     
   try {
-      await axios.post('http://localhost:5000/auth/logout' , {} , {
+      await axios.post(`${API_URL}/auth/logout` , {} , {
         withCredentials:true
       })
 

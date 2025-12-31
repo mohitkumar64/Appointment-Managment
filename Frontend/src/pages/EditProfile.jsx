@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthProvider";
 import { useState, useRef } from "react";
 import dayjs from "dayjs";
 import Popup from "./function/Popup";
+import { API_URL } from "../config";
+
 
 function EditProfile() {
   const { user, setUser } = useAuth();
@@ -34,7 +36,7 @@ function EditProfile() {
       formData.append("image", file);
 
       const res = await axios.put(
-        "http://localhost:5000/api/user/uploadimage",
+        `${API_URL}/api/user/uploadimage`,
         formData,
         { withCredentials: true }
       );
@@ -62,7 +64,7 @@ function EditProfile() {
   async function handleUpdate() {
     try {
       const res = await axios.put(
-        "http://localhost:5000/api/user/updateUser",
+        `${API_URL}/api/user/updateUser`,
         value,
         { withCredentials: true }
       );

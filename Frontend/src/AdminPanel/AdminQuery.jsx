@@ -4,6 +4,7 @@ import Sidebar from "./AdminSidebar";
 import { useOutletContext } from "react-router-dom";
 import dayjs from "dayjs";
 import axios from "axios";
+import { API_URL } from "../config";
 
 function AdminQuery() {
   const [active, setActive] = useState("Query");
@@ -13,7 +14,7 @@ function AdminQuery() {
   const today = dayjs().format("DD-MM-YYYY");
 
  const handleDelete =  async(id) => {
-    const res = await axios.delete('http://localhost:5000/api/v1/admin/getquery' , id ,  {withCredentials : true} )
+    const res = await axios.delete(`${API_URL}/api/v1/admin/getquery` , id ,  {withCredentials : true} )
 
     if(res.data.message){
 
