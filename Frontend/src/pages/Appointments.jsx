@@ -60,8 +60,25 @@ async  function handlePost(){
     }
   } catch (error) {
     console.log(error)
-    setPopupMessage("something went wrong");
+    
+  if(error.name === "AxiosError"){
+      let er = error.response.data.errors;
+        er.map((error)=> setPopupMessage(error));
+    }else{
+      setPopupMessage('something went wrong')
+    }
+
+    setValue({
+           "studentId" : user._id ,
+          "TeacherId" : "",
+          "subject" : "",
+          "reason" : "",
+          "date" : "",
+          "mode" : "" ,
+          "TimeSlot" : ""
+        })
   }
+
      
   }
 
