@@ -26,7 +26,7 @@ function Navbar() {
   } catch (error) {
     console.log(error)
   }finally{
-      console.log("navbar")
+     
       navigate('/login');
       
   }

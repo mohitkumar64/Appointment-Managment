@@ -12,6 +12,7 @@ function Appointments() {
 
   const [activeTab, setActiveTab] = useState("pending");
   const [popupMessage, setPopupMessage] = useState("");
+  const [subjects , setSubjects]  = useState([]);
 
   const [Teacher , setTeacher] = useState([]);
   const {user , appointments , setAppointments} = useAuth();
@@ -44,6 +45,8 @@ async  function handlePost(){
         
         setAppointments(prev => [...prev, res.data.appointment]);
         setPopupMessage("Appointment created successfully");
+        console.log(value);
+        
         setValue({
            "studentId" : user._id ,
           "TeacherId" : "",
@@ -128,27 +131,51 @@ async  function handlePost(){
              <select
                   className={inputClass}
                   name="TeacherId"
-                  onChange={(e) =>
+                  onChange={(e) =>  {              
                     setValue((prev) => ({
                       ...prev,
                       TeacherId: e.target.value,
                     }))
-                  }
+
+                    if(e.target.value){
+                   setSubjects( Teacher.filter((t)=> t._id === e.target.value)[0]?.subjects);
+                  }else{
+                      setSubjects([]);
+                    }
+                    
+                  }}
                 >
                   <option value="">Select Teacher</option>
 
                   {Teacher.map((t) => (
-                    <option key={t._id} value={t._id}>
+                    <option key={t._id} value={t._id}     > 
                       {t.name}
                     </option>
                   ))}
               </select>
 
               <label>Subject</label>
-              <input  value={value.subject} className={inputClass}
-                 onChange={handleChange} 
-                name="subject"
-              />
+              
+              <select
+                  className={inputClass}
+                  name="subject"
+                  onChange={(e) =>
+                    setValue((prev) => ({
+                      ...prev,
+                      subject: e.target.value,
+                    }))
+                  }
+                >
+                 
+
+                  { subjects.length>0 ? subjects.map((t , i) => (
+                    <option key={t+i} value={t}>
+                      {t}
+                    </option>
+                  )) : <option>
+                        Select the teacher first
+                    </option>}
+              </select>
 
               <label>Reason</label>
               <textarea rows={3}  value={value.reason} className={inputClass}

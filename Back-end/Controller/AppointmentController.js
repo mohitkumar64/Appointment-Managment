@@ -43,13 +43,28 @@ async function PostAppointments(req,res) {
        res.status(200).json({
             status : true , appointment
        })   
-      } catch (error) {
-           console.log("from postAppointment"+error);
-           
-      }
+     }  catch (error) {
+
+               // Mongoose validation error
+               if (error.name === "ValidationError") {
+                    const errors = Object.values(error.errors).map(err => err.message);
+
+                    return res.status(400).json({
+                    success: false,
+                    errors
+                    });
+               }
+
+               // fallback
+               res.status(500).json({
+                    success: false,
+                    message: "Something went wrong"
+               });
+               }
+               };
          
     
-}
+
 async function DeleteAppointment(req,res) {
     
     
