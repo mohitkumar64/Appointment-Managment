@@ -187,13 +187,13 @@ async  function handlePost(){
         </div>
 
       
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-3 overflow-hidden md:p-6">
           <div className="flex gap-4 mb-4">
             {["pending", "approved", "rejected"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
+                className={` px-2  md:px-4 py-2 rounded-lg font-medium transition ${
                   activeTab === tab
                     ? "bg-blue-600 text-white shadow"
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -206,9 +206,9 @@ async  function handlePost(){
               <div>
                   {
                     filterappointment.length > 0 ?                    
-                        (<div  className="grid  gap-5  grid-cols-2 md:grid-cols-3 ">
+                        (<div  className="grid  gap-5  grid-cols-1 md:grid-cols-3 ">
                         {
-                          filterappointment.map((v , i)=>{
+                          filterappointment.map((v)=>{
                           return ( 
                               <AppointmentCard  appointment={v} key={v._id} user={user}/> 
                           )

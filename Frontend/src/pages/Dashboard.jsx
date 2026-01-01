@@ -60,10 +60,10 @@ function Dashboard() {
  
   
   return (
-    <div className="min-h-[100vh] ">
+    <div className="min-h-screen ">
       <Navbar />
       <div className="  gap-x-5  gap-y-5 m-5 p-5 flex flex-wrap ">
-        <div className="flex-1 min-w-[400px] bg-white border rounded-xl" >
+        <div className="flex-1  bg-white border rounded-xl" >
             <div className=" flex rounded-t-xl flex-col bg-linear-to-b from-blue-600 to-blue-700 justify-center items-center ">
               <div className="rounded-full object-cover overflow-hidden w-50 h-50 border-2 border-blue-900">
                   <img  className=" h-50 w-55  bg-clip-content" src={ user.ProfileImage || "https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"} alt="" />

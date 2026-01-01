@@ -58,7 +58,7 @@ function Navbar() {
         </button>
 
                         
-              <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-2 md:gap-6 text-sm">
                 { role === "Admin" ?  
                 <NavLink
                       to="/adminpanel"

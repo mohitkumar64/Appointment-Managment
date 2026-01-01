@@ -54,9 +54,7 @@ export default function AdminPanel() {
                 Recent Appointments
               </h2>
 
-              <button className="text-sm text-blue-500 hover:underline">
-                View all
-              </button>
+             
             </div>
 
             <div className="space-y-3">
@@ -65,7 +63,7 @@ export default function AdminPanel() {
                   key={app._id}
                   className="grid grid-cols-1 gap-4
                             md:grid-cols-5 md:items-center md:gap-6
-                            border border-blue-100 rounded-md px-4 py-3"
+                            border border-blue-100 rounded-md px-4 py-3 wrap-anywhere"
                 >
 
                   <div>
