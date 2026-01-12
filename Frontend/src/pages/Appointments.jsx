@@ -146,6 +146,7 @@ async  function handlePost(){
              
               <label>Teacher</label>
              <select
+                  value={value.TeacherId}
                   className={inputClass}
                   name="TeacherId"
                   onChange={(e) =>  {              
@@ -162,7 +163,7 @@ async  function handlePost(){
                     
                   }}
                 >
-                  <option value="">Select Teacher</option>
+                  <option  value="">Select Teacher</option>
 
                   {Teacher.map((t) => (
                     <option key={t._id} value={t._id}     > 
