@@ -43,7 +43,7 @@ function AdminEditProfile() {
     setValue(prev => ({
       ...prev,
       role: e.target.value,
-      subject: e.target.value === "teacher" ? prev.subject : []
+      subject: e.target.value === "Teacher" ? prev.subject : []
     }));
   }
 
@@ -63,7 +63,7 @@ function AdminEditProfile() {
         id: userId,
         value: {
           role: value.role,
-          subject: value.role === "teacher" ? value.subject : []
+          subject: value.role === "Teacher" ? value.subject : []
         }
       };
 
@@ -135,13 +135,13 @@ function AdminEditProfile() {
                 className="px-3 py-2 border rounded-md outline-none"
               >
                 <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
-                <option value="admin">Admin</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Admin">Admin</option>
               </select>
             </div>
 
             {/* Subjects (teacher only) */}
-            {value.role === "teacher" && (
+            {value.role === "Teacher" && (
               <div className="flex flex-col">
                 <label className="text-sm font-medium text-gray-600">
                   Subjects (comma separated)
