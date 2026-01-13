@@ -14,15 +14,23 @@ function AdminQuery() {
   const today = dayjs().format("DD-MM-YYYY");
 
  const handleDelete =  async(id) => {
-    const res = await axios.delete(`${API_URL}/api/v1/admin/getquery` , id ,  {withCredentials : true} )
+  try {
+     const res = await axios.delete(`${API_URL}/api/v1/admin/getquery/${id}` ,  {withCredentials : true} )
 
     if(res.data.message){
-
-
+     
         setSubmittedQueries((prev) =>
       prev.filter((query) => query._id !== id)
         );
+      if(res.data.error){
+        console.log(res.data.error)
+      }
     }
+  } catch (error) {
+      console.log(error);
+      
+  } 
+   
     
   };
 
