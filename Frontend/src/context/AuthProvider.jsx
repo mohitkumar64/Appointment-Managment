@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
         setUser(res.data);
        
       } catch {
-        console.log("error in auth");
+        // console.log("error in auth");
         
         setUser(null);
       } finally {

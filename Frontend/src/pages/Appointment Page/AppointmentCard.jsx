@@ -1,11 +1,13 @@
 
 import axios from "axios";
-import FormatDate from "./function/FormatDate";
-import { useAuth } from "../context/AuthProvider";
-import { API_URL } from "../config";
+import FormatDate from "../function/FormatDate";
+import { useAuth } from "../../context/AuthProvider";
+import { API_URL } from "../../config";
+import { useState } from "react";
 
 function AppointmentCard({ appointment, user }) {
   const {updateAppointmentStatus} = useAuth();
+  const [status , setStatus] = useState("pending")
   const {
     studentId,
     TeacherId,
@@ -17,16 +19,17 @@ function AppointmentCard({ appointment, user }) {
   
   const isTeacher = user?.role === "Teacher";
 
-  async function handleUpadte(status) {
+  async function handleUpadte(Status) {
   try {
+    setStatus(Status)
     const res = await axios.put(
       `${API_URL}/api/v1/Appointments`,
-      { _id, Status: status },
+      { _id, Status: Status },
       { withCredentials: true }
     );
 
     if (res.status === 200) {
-      updateAppointmentStatus(_id, status);
+      updateAppointmentStatus(_id, Status);
     }
   } catch (err) {
     console.error("Update failed", err);
@@ -62,20 +65,28 @@ function AppointmentCard({ appointment, user }) {
       </p>
 
       {isTeacher && (
+        
         <div className="flex justify-end gap-3 mt-2">
-          <button
+         { status != "approved" &&
+           <button
             onClick={()=>{
+              
               handleUpadte("approved")}}
           
           className="px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700">
             Accept
           </button>
-          <button 
+         }
+          {
+            status != "rejected" &&
+            <button 
             onClick={() =>{
               handleUpadte('rejected')}}
           className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
             Decline
           </button>
+          }
+          
         </div>
       )}
     </div>

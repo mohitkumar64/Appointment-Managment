@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import Navbar from "../component/Navbar";
-import {useAuth} from "../context/AuthProvider"
+import { useEffect , useState } from "react";
+import Navbar from "../../component/Navbar";
+import {useAuth} from "../../context/AuthProvider"
 import axios from "axios";
 import AppointmentCard from "./AppointmentCard";
-import Popup from "./function/Popup";
-import { API_URL } from "../config";
+import Popup from "../function/Popup";
+import { API_URL } from "../../config";
 
 
 

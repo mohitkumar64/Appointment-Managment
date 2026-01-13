@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Navbar from "../component/Navbar";
+import Navbar from "../../component/Navbar";
 import axios from "axios";
 import dayjs from 'dayjs'
-import { API_URL } from "../config";
+import { API_URL } from "../../config";
 
 function PostQuery() {
   const [query, setQuery] = useState("");

@@ -29,7 +29,8 @@
 }
 
 .form-l{
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     background-color: rgb(255, 255, 255);
     height: 400px;
     display: flex;
@@ -59,6 +60,7 @@
 .input-1 input{
     padding-left: 10px;
     padding-right: 20px;
+  
     width: 350px;
     border: transparent;
     outline: none;
@@ -107,4 +109,25 @@
 
 .dont-have a:hover{
     color: rgb(28, 78, 217);
+}
+
+@media (max-width: 640px) {
+    .body-l{
+        padding: 16px;
+        align-items: flex-start;
+    }
+
+    .Heading-l h1{
+        font-size: 32px;
+    }
+
+    .form-l{
+        padding: 24px 20px;
+        height: auto;
+    }
+    .input-1 input{
+  
+  
+    width: 100%;}
+    
 }

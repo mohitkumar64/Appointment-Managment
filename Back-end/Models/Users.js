@@ -6,6 +6,11 @@ const UserSchema = new mongoose.Schema({
         type : String ,
         index  :true
     },
+    password: {
+        type: String,
+        required: false
+        }
+        ,
     role : {
         type : String ,
         default : "student"

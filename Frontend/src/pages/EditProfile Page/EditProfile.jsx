@@ -1,10 +1,10 @@
 import axios from "axios";
-import Navbar from "../component/Navbar";
-import { useAuth } from "../context/AuthProvider";
+import Navbar from "../../component/Navbar";
+import { useAuth } from "../../context/AuthProvider";
 import { useState, useRef } from "react";
 import dayjs from "dayjs";
-import Popup from "./function/Popup";
-import { API_URL } from "../config";
+import Popup from "../function/Popup";
+import { API_URL } from "../../config";
 
 
 function EditProfile() {

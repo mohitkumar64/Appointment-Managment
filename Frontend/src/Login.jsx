@@ -32,7 +32,7 @@ function Login() {
               {!error &&
           <div className="flex hover:  w-50 text-2xl justify-center items-center">
               <GoogleLogin 
-              theme="outline"
+              
               size="large"
             onSuccess={handleSuccess}
             onError={() => console.log("Google Login Failed")}

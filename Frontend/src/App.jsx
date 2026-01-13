@@ -2,17 +2,18 @@
 import './App.css'
 import {Routes , Route} from "react-router-dom"
 import Dashboard from './pages/Dashboard'
-import Appointments from './pages/Appointments'
-import EditProfile from './pages/EditProfile'
-import { LoginPage } from './pages/LoginPages'
+import Appointments from './pages/Appointment Page/Appointments'
+import EditProfile from './pages/EditProfile Page/EditProfile'
+import { LoginPage } from './pages/Auth/LoginPages'
 import ProtectedRoute from './Protectedroute'
 import AdminRoute from './AdminRoute'
 import AdminPanel from './AdminPanel/AdminPanel'
 import Users from './AdminPanel/Users'
 import AdminEditProfile from './AdminPanel/AdminEditProfile'
-import PostQuery from './pages/Query'
+import PostQuery from './pages/QueryPage/Query'
 import AdminQuery from './AdminPanel/AdminQuery'
 import {NotFound} from './pages/NotFound'
+import { RegisterPage } from './pages/Auth/Register'
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
        
 
         <Route  path='/login' element={<LoginPage />} />
+         <Route  path='/register' element={<RegisterPage />} />
         <Route path='*' element={<NotFound />} />
 
      </Routes>
