@@ -7,21 +7,26 @@ import { useState } from "react";
 
 function AppointmentCard({ appointment, user }) {
   const {updateAppointmentStatus} = useAuth();
-  const [status , setStatus] = useState("pending")
+ 
+
+  
   const {
     studentId,
     TeacherId,
     subject,
     reason,
+    Status ,
     date,
     TimeSlot, _id
   } = appointment;
   
   const isTeacher = user?.role === "Teacher";
+   const isApproved = Status === "approved";
+  const isRejected = Status === "rejected";
 
   async function handleUpadte(Status) {
   try {
-    setStatus(Status)
+    
     const res = await axios.put(
       `${API_URL}/api/v1/Appointments`,
       { _id, Status: Status },
@@ -30,6 +35,7 @@ function AppointmentCard({ appointment, user }) {
 
     if (res.status === 200) {
       updateAppointmentStatus(_id, Status);
+      
     }
   } catch (err) {
     console.error("Update failed", err);
@@ -67,7 +73,7 @@ function AppointmentCard({ appointment, user }) {
       {isTeacher && (
         
         <div className="flex justify-end gap-3 mt-2">
-         { status != "approved" &&
+         { !isApproved &&
            <button
             onClick={()=>{
               
@@ -78,7 +84,7 @@ function AppointmentCard({ appointment, user }) {
           </button>
          }
           {
-            status != "rejected" &&
+            !isRejected &&
             <button 
             onClick={() =>{
               handleUpadte('rejected')}}

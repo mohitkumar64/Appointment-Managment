@@ -39,6 +39,12 @@ function Appointments() {
   }
 async  function handlePost(){
   try {
+    if(!value.TeacherId) {
+      setPopupMessage("select a Teacher ")
+      return
+    }
+    
+
     
     const res = await axios.post(`${API_URL}/api/v1/Appointments` , value , {withCredentials  :true});
     if(res.data.status){
@@ -68,15 +74,6 @@ async  function handlePost(){
       setPopupMessage('something went wrong')
     }
 
-    setValue({
-           "studentId" : user._id ,
-          "TeacherId" : "",
-          "subject" : "",
-          "reason" : "",
-          "date" : "",
-          "mode" : "" ,
-          "TimeSlot" : ""
-        })
   }
 
      

@@ -20,6 +20,8 @@ async function getallusers(req ,res) {
 }
 
 async function UpdateUser(req , res) {
+    console.log(req.body);
+    
     
     const{name,FatherName,MotherName,DateOfBirth,Course,Year,RollNumber,Branch} = req.body;
     const info = {
@@ -43,7 +45,7 @@ async function UpdateUser(req , res) {
         runValidators : true
     }); 
 
-    console.log(user)
+   
    if(!user){
     res.status(404);
    } 

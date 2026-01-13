@@ -39,7 +39,7 @@ export function RegisterPage() {
         { withCredentials: true }
       );
 
-      window.location.href = '/dashboard';
+      window.location.href = '/';
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
       console.log(err);

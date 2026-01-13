@@ -38,7 +38,7 @@ export function LoginPage() {
       );
 
       // redirect after login
-      window.location.href = '/dashboard';
+      window.location.href = '/';
     } catch (err) {
       setError(err.response?.data?.error || 'Login failed');
     } finally {
@@ -55,7 +55,7 @@ export function LoginPage() {
           <p>Sign in to your account to continue</p>
         </div>
 
-        <div className='form-l'>
+        <div className='form-l flex flex-col gap-2'>
           <form onSubmit={handleSubmit}>
 
             <div className='fix-ml'>
@@ -64,6 +64,7 @@ export function LoginPage() {
                 <i className="bi bi-person"></i>
                 <input
                   type="email"
+                  autoComplete='username'
                   name="email"
                   value={form.email}
                   onChange={handleChange}
@@ -78,6 +79,7 @@ export function LoginPage() {
                 <input
                   type="password"
                   name="password"
+                  autoComplete='current-password'
                   value={form.password}
                   onChange={handleChange}
                 />
@@ -94,12 +96,14 @@ export function LoginPage() {
               Don’t have an account? <a href="/register">Sign up</a>
             </p>
           </form>
-        </div>
-
-        {/* Google login  */}
-        <div className='flex justify-center items-center bg-[rgb(255,255,255)]  rounded-md w-full    mt-4'>
+           {/* Google login  */}
+        <div className='flex flex-col justify-center items-center bg-[rgb(255,255,255)]  rounded-md w-full    mt-4'>
+          <p>Or</p>
           <Login />
         </div>
+        </div>
+
+       
 
       </div>
     </div>

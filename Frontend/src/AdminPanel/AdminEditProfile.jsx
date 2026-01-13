@@ -3,11 +3,15 @@ import Navbar from "./AdminNavbar";
 import Sidebar from "./AdminSidebar";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import dayjs from 'dayjs'
+import dayjs from "dayjs";
 import { API_URL } from "../config";
+import Popup from "../pages/function/Popup";
+
 function AdminEditProfile() {
   const { userId, role } = useParams();
-    const [active , setActive] = useState('Users')
+  const [active, setActive] = useState("Users");
+  const [popupMessage, setPopupMessage] = useState("");
+
   const [value, setValue] = useState({
     name: "",
     FatherName: "",
@@ -26,14 +30,17 @@ function AdminEditProfile() {
     setValue(prev => ({ ...prev, [name]: value }));
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     async function getuserData() {
-        const res = await axios.post(`${API_URL}/api/v1/admin/getuserdata` ,{_id : userId} , {withCredentials : true});
-        setValue(res.data);
+      const res = await axios.post(
+        `${API_URL}/api/v1/admin/getuserdata`,
+        { _id: userId },
+        { withCredentials: true }
+      );
+      setValue(res.data);
     }
-
     getuserData();
-  }, [])
+  }, []);
 
   function handleSubjectChange(e) {
     setValue(prev => ({
@@ -47,20 +54,15 @@ function AdminEditProfile() {
 
   async function handleUpdate() {
     try {
-        await axios.put(
-      `${API_URL}/api/v1/admin/getallusers`,
-      { _id : userId ,   value},
-      { withCredentials: true }
-    );
-
-   
+      await axios.put(
+        `${API_URL}/api/v1/admin/getallusers`,
+        { _id: userId, value },
+        { withCredentials: true }
+      );
     } catch (error) {
       console.log(error);
-      
-    
-       
+      setPopupMessage("something went wrong");
     }
-    
   }
 
   return (
@@ -68,85 +70,100 @@ function AdminEditProfile() {
       <Navbar />
 
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar active={active}  setActive={setActive}/>
+        <Sidebar active={active} setActive={setActive} />
+        {popupMessage && (
+          <Popup message={popupMessage} setPopupMessage={setPopupMessage} />
+        )}
 
-        <div className="m-5 flex flex-1 bg-white rounded-2xl border border-slate-200 shadow-sm p-10">
+        <div className="m-3 sm:m-5 flex flex-1 bg-white rounded-2xl
+                        border border-slate-200 shadow-sm
+                        p-4 sm:p-10">
 
-          <div className="flex-1 flex justify-center">
-            <div className="w-60 h-60 rounded-full border-2 overflow-hidden">
-              <img
-                src="https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"
-                alt="profile"
-              />
-            </div>
-          </div>
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
 
-          <div className="flex-3 w-full">
-            <div className="grid grid-cols-2 gap-x-20 gap-y-7">
-
-              <Field label="Name" name="name" value={value?.name} onChange={handleChange} />
-              <Field label="Father Name" name="FatherName" value={value?.FatherName} onChange={handleChange} />
-              <Field label="Mother Name" name="MotherName" value={value?.MotherName} onChange={handleChange} />
-
-              <div className="flex flex-col">
-                <label>D.O.B</label>
-                <input
-                  type="date"
-                  name="DateOfBirth"
-                  value={dayjs(value.DateOfBirth).format('YYYY-MM-DD')}
-                  onChange={handleChange}
-                  className="px-3 py-1 outline-none border-b-2 border-gray-400 hover:border-black focus:border-black"
+            {/* Profile image */}
+            <div className="flex justify-center lg:w-1/3">
+              <div className="w-40 h-40 sm:w-60 sm:h-60 rounded-full border-2 overflow-hidden">
+                <img
+                  src="https://i.pinimg.com/1200x/f9/b0/6e/f9b06eea4f4f576ca92fa2f35e6206f7.jpg"
+                  alt="profile"
+                  className="w-full h-full object-cover"
                 />
               </div>
+            </div>
 
-              <div className="flex flex-col">
-                <label>Role</label>
-                <select
-                  name="role"
-                  value={value?.role}
-                  onChange={handleChange}
-                  className="px-3 py-1 outline-none border-b-2 border-gray-400 hover:border-black focus:border-black"
-                >
-                <option   value="Student">Student</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Teacher">Teacher</option>
-                
-                </select>
-              </div>
+            {/* Form */}
+            <div className="flex-1 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2
+                              gap-x-6 lg:gap-x-20 gap-y-7">
 
-              {value?.role === "Student" && (
-                <>
-                  <Field label="Roll Number" name="RollNumber" value={value?.RollNumber} onChange={handleChange} />
-                  <Field label="Course" name="Course" value={value?.Course} onChange={handleChange} />
-                  <Field label="Branch" name="Branch" value={value?.Branch} onChange={handleChange} />
-                  <Field label="Year / Sem" name="Year" value={value?.Year} onChange={handleChange} />
-                </>
-              )}
+                <Field label="Name" name="name" value={value?.name} onChange={handleChange} />
+                <Field label="Father Name" name="FatherName" value={value?.FatherName} onChange={handleChange} />
+                <Field label="Mother Name" name="MotherName" value={value?.MotherName} onChange={handleChange} />
 
-              {value?.role === "Teacher" && (
-                <div className="flex flex-col col-span-2">
-                  <label>Subjects (comma separated)</label>
+                <div className="flex flex-col">
+                  <label>D.O.B</label>
                   <input
-                    type="text"
-                    placeholder="Math, Physics, Chemistry"
-                    onChange={handleSubjectChange}
-                    className="px-3 py-1 outline-none border-b-2 border-gray-400 hover:border-black focus:border-black"
+                    type="date"
+                    name="DateOfBirth"
+                    value={value.DateOfBirth ? dayjs(value.DateOfBirth).format("YYYY-MM-DD") : ""}
+                    onChange={handleChange}
+                    className="px-3 py-1 outline-none border-b-2 border-gray-400
+                               hover:border-black focus:border-black"
                   />
                 </div>
-              )}
 
-              <div className="col-span-2 flex justify-end">
-                <button
-                  onClick={handleUpdate}
-                  className="bg-blue-700 px-6 py-2 text-lg font-semibold text-white rounded-xl"
-                >
-                  Update
-                </button>
+                <div className="flex flex-col">
+                  <label>Role</label>
+                  <select
+                    name="role"
+                    value={value?.role}
+                    onChange={handleChange}
+                    className="px-3 py-1 outline-none border-b-2 border-gray-400
+                               hover:border-black focus:border-black"
+                  >
+                    <option value="student">Student</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Teacher">Teacher</option>
+                  </select>
+                </div>
+
+                {value?.role === "Student" && (
+                  <>
+                    <Field label="Roll Number" name="RollNumber" value={value?.RollNumber} onChange={handleChange} />
+                    <Field label="Course" name="Course" value={value?.Course} onChange={handleChange} />
+                    <Field label="Branch" name="Branch" value={value?.Branch} onChange={handleChange} />
+                    <Field label="Year / Sem" name="Year" value={value?.Year} onChange={handleChange} />
+                  </>
+                )}
+
+                {value?.role === "Teacher" && (
+                  <div className="flex flex-col md:col-span-2">
+                    <label>Subjects (comma separated)</label>
+                    <input
+                      type="text"
+                      placeholder="Math, Physics, Chemistry"
+                      onChange={handleSubjectChange}
+                      className="px-3 py-1 outline-none border-b-2 border-gray-400
+                                 hover:border-black focus:border-black"
+                    />
+                  </div>
+                )}
+
+                <div className="md:col-span-2 flex justify-end">
+                  <button
+                    onClick={handleUpdate}
+                    className="bg-blue-700 px-6 py-2 text-lg
+                               font-semibold text-white rounded-xl"
+                  >
+                    Update
+                  </button>
+                </div>
+
               </div>
-
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -159,7 +176,8 @@ function Field({ label, ...props }) {
       <label>{label}</label>
       <input
         {...props}
-        className="px-3 py-1 outline-none border-b-2 border-gray-400 hover:border-black focus:border-black"
+        className="px-3 py-1 outline-none border-b-2 border-gray-400
+                   hover:border-black focus:border-black"
       />
     </div>
   );
