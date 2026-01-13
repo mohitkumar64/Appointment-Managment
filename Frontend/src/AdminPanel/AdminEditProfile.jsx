@@ -54,6 +54,8 @@ function AdminEditProfile() {
 
   async function handleUpdate() {
     try {
+      console.log(value);
+      
       await axios.put(
         `${API_URL}/api/v1/admin/getallusers`,
         { _id: userId, value },
@@ -79,7 +81,7 @@ function AdminEditProfile() {
                         border border-slate-200 shadow-sm
                         p-4 sm:p-10">
 
-          <div className="flex flex-col lg:flex-row gap-8 w-full">
+          <div className="flex flex-col overflow-y-auto lg:flex-row gap-8 w-full">
 
             {/* Profile image */}
             <div className="flex justify-center lg:w-1/3">

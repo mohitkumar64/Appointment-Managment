@@ -20,10 +20,10 @@ async function getallusers(req ,res) {
 }
 
 async function UpdateUser(req , res) {
-    console.log(req.body);
+   
     
     
-    const{name,FatherName,MotherName,DateOfBirth,Course,Year,RollNumber,Branch} = req.body;
+    const{name,FatherName,MotherName,DateOfBirth,Course,Year,RollNumber,Branch , subject , role} = req.body;
     const info = {
         "name" : name ,
         "FatherName" : FatherName, 
@@ -34,17 +34,22 @@ async function UpdateUser(req , res) {
         "Year" : Year ,
         "RollNumber" : RollNumber,
         "Branch" : Branch,
-        }
+        
+        },
+        "role" : role ,
+        TeacherInfo : {
+        "Subjects" : subject ,}
         
      
 
     }
 
-    const user = await User.findByIdAndUpdate(req.user.userId , info , {
+    const user = await User.findByIdAndUpdate(req.user.userId ,{ $set: info } , {
         new : true ,
         runValidators : true
     }); 
-
+    console.log("user after admin update : " user);
+    
    
    if(!user){
     res.status(404);
