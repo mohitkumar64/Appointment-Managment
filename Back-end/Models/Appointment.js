@@ -34,6 +34,7 @@ const AppointmentSchema = new mongoose.Schema(
     subject: {
       type: String,
       trim: true,
+       required: [true, " subject  is required"],
     },
 
     reason: {

@@ -63,7 +63,7 @@ function AppointmentCard({ appointment, user }) {
       </p>
 
       <p className="text-gray-700">
-        Reason: {reason}
+        Message: {reason}
       </p>
 
       <p className="text-sm">

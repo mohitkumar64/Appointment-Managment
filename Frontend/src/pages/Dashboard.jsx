@@ -176,7 +176,7 @@ function Dashboard() {
                              {` ${FormateDate(v.date) }, ${v.TimeSlot || ""}`}
                             </p>
                             <p className="text-sm text-gray-600">
-                              With Mohit Kumar
+                             with {user.role === "student" ?` Teacher: ${v.TeacherId.name}` :` Student: ${v.studentId.name}` }
                             </p>
                     </div>
 
